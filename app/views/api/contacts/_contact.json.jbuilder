@@ -13,4 +13,4 @@ json.formatted do
   json.japanese_country_code contact.japanese_country_code
 end
 json.user contact.user
-
+json.groups contact.groups

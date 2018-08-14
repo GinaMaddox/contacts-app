@@ -19,10 +19,18 @@
  #   contact.save
  # end
 
-users = User.all
+# users = User.all
+# contacts = Contact.all
+
+# contacts.each do |contact|
+#   contact.user_id = users.sample.id
+#   contact.save
+# end
+
 contacts = Contact.all
+group = Group.all
 
 contacts.each do |contact|
-  contact.user_id = users.sample.id
-  contact.save
+  ContactGroup.create(contact_id: contact.id, group_id: group.sample.id)
+  ContactGroup.create(contact_id: contact.id, group_id: group.sample.id)
 end
