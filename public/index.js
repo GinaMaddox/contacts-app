@@ -7,7 +7,10 @@ var HomePage = {
   data: function() {
     return {
       message: "Welcome to Vue.js!",
-      contacts: []
+      contacts: [],
+      nameFilter: "",
+      sortAttribute: "first_name",
+      sortOrder: -1
     };
   },
   created: function() {
@@ -17,7 +20,12 @@ var HomePage = {
     }.bind(this));
       
   },
-  methods: {},
+  methods: {
+    setSortAttribute: function(attribute) {
+      this.sortAttribute = attribute;
+    }
+  },
+
   computed: {}
 };
 
@@ -133,12 +141,38 @@ var NewContactPage = {
     }
   }
 };
+
+var ContactShowPage = {
+  template: "#contact-show-page",
+  data: function() {
+    return {
+      message: "Welcome to Vue.js!",
+      contact: {
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone_number: ""},
+    };
+  },  
+  created: function() {
+    axios.get("/api/contacts/" + this.$route.params.id).then(function(response) {
+      console.log(response.data);
+      this.contacts = response.data;
+    }.bind(this));
+      
+  },
+  methods: {},
+  computed: {}
+};
+
+
 var router = new VueRouter({
   routes: [{ path: "/", component: HomePage },
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
     { path: "/logout", component: LogoutPage },
-    { path: "/contacts/new", component: NewContactPage }
+    { path: "/contacts/new", component: NewContactPage },
+    { path: "/contacts/:id", component: ContactShowPage }
   ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };
